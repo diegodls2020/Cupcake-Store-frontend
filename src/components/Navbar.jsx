@@ -1,23 +1,19 @@
 // src/components/Navbar.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 
-const Navbar = () => {
+const Navbar = ({ cart }) => {
   return (
-    <nav style={{ backgroundColor: '#f8b195', padding: '1rem', display: 'flex', justifyContent: 'space-between', color: '#fff' }}>
-      <h1>Cupcake Store</h1>
-      <ul style={{ display: 'flex', gap: '1rem', listStyle: 'none' }}>
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/products">Productos</Link></li>
-        <li><Link to="/contact">Contacto</Link></li>
-        <li><Link to="/cart">
-          <FontAwesomeIcon icon={faShoppingCart} /> Carrito
-        </Link></li>
-      </ul>
+    <nav style={{ display: 'flex', justifyContent: 'space-between', padding: '1rem', backgroundColor: '#f8b195' }}>
+      <Link to="/" style={{ color: '#fff', textDecoration: 'none', fontWeight: 'bold' }}>Inicio</Link>
+      <Link to="/products" style={{ color: '#fff', textDecoration: 'none', fontWeight: 'bold' }}>Productos</Link>
+      <Link to="/contact" style={{ color: '#fff', textDecoration: 'none', fontWeight: 'bold' }}>Contacto</Link>
+      <Link to="/cart" style={{ color: '#fff', textDecoration: 'none', fontWeight: 'bold' }}>
+        Carrito ({cart.length})
+      </Link>
     </nav>
   );
 };
 
 export default Navbar;
+

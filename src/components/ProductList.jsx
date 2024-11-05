@@ -1,22 +1,15 @@
-// src/components/ProductList.jsx
-import React from 'react';
-import ProductCard from './ProductCard';
+const handleAddToCart = (product) => {
+  setCart((prevCart) => {
+      const existingProduct = prevCart.find((item) => item.id === product.id);
 
-const products = Array.from({ length: 12 }, (_, index) => ({
-  id: index + 1,
-  name: `Cupcake ${index + 1}`,
-  price: (Math.random() * 5 + 3).toFixed(2),
-  image: `https://via.placeholder.com/150?text=Cupcake+${index + 1}`,
-}));
-
-const ProductList = () => {
-  return (
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem', padding: '2rem' }}>
-      {products.map((product) => (
-        <ProductCard key={product.id} product={product} />
-      ))}
-    </div>
-  );
+      if (existingProduct) {
+          // Si el producto ya está en el carrito, incrementa la cantidad
+          return prevCart.map((item) =>
+              item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+          );
+      } else {
+          // Si el producto no está en el carrito, agrégalo con cantidad 1
+          return [...prevCart, { ...product, quantity: 1 }];
+      }
+  });
 };
-
-export default ProductList;

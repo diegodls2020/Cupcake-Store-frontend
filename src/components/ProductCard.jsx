@@ -1,13 +1,54 @@
-// src/components/ProductCard.jsx
 import React from 'react';
+import '../App.css'
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, quantity, onQuantityChange, onAddToCart }) => {
+  const handleAddToCart = () => {
+    if (quantity > 0) {
+      onAddToCart({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        quantity: quantity,
+        image: product.image,
+      });
+    }
+  };
+
   return (
-    <div style={{ backgroundColor: '#ffcbcb', padding: '1rem', borderRadius: '8px', textAlign: 'center' }}>
-      <img src={product.image} alt={product.name} style={{ width: '100%', borderRadius: '8px' }} />
-      <h3>{product.name}</h3>
-      <p>${product.price}</p>
-      <button style={{ backgroundColor: '#f8b195', border: 'none', padding: '0.5rem 1rem', color: '#fff', borderRadius: '5px' }}>Agregar al carrito</button>
+    <div className="product-card">
+      <img 
+        src={product.image} 
+        alt={product.name} 
+        className="product-image" 
+      />
+      <h3 className="product-name">{product.name}</h3>
+      <p className="product-price">
+        Precio: R${product.price.toFixed(2)}
+      </p>
+
+      <div className="quantity-controls">
+        <button
+          onClick={() => onQuantityChange(1)}
+          className="quantity-btn"
+        >
+          +
+        </button>
+        <span className="quantity-display">{quantity}</span>
+        <button
+          onClick={() => onQuantityChange(-1)}
+          className="quantity-btn"
+          disabled={quantity <= 0}
+        >
+          -
+        </button>
+      </div>
+
+      <button
+        onClick={handleAddToCart}
+        className="add-to-cart-btn"
+      >
+        Agregar al carrito
+      </button>
     </div>
   );
 };
