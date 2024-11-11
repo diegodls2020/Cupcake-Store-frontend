@@ -1,52 +1,31 @@
-import React from 'react';
-import '../App.css'
+import React, { useState } from "react";
 
-const ProductCard = ({ product, quantity, onQuantityChange, onAddToCart }) => {
+const ProductCard = ({ product, addToCart }) => {
+  const [quantity, setQuantity] = useState(1);
+
   const handleAddToCart = () => {
-    if (quantity > 0) {
-      onAddToCart({
-        id: product.id,
-        name: product.name,
-        price: product.price,
-        quantity: quantity,
-        image: product.image,
-      });
-    }
+    addToCart({ ...product, quantity }); // Pasa el producto y la cantidad seleccionada
   };
 
   return (
     <div className="product-card">
-      <img 
-        src={product.image} 
-        alt={product.name} 
-        className="product-image" 
+      <img
+        src={`http://localhost:5000/images/${product.image}`}
+        alt={product.name}
+        className="product-image"
       />
-      <h3 className="product-name">{product.name}</h3>
-      <p className="product-price">
-        Precio: R${product.price.toFixed(2)}
-      </p>
+      <h2 className="product-name">{product.name}</h2>
+      <p className="product-price">${product.price}</p>
 
+      {/* Controles de cantidad */}
       <div className="quantity-controls">
-        <button
-          onClick={() => onQuantityChange(1)}
-          className="quantity-btn"
-        >
-          +
-        </button>
-        <span className="quantity-display">{quantity}</span>
-        <button
-          onClick={() => onQuantityChange(-1)}
-          className="quantity-btn"
-          disabled={quantity <= 0}
-        >
-          -
-        </button>
+        <button onClick={() => setQuantity(quantity - 1)}>-</button>
+        <span>{quantity}</span>
+        <button onClick={() => setQuantity(quantity + 1)}>+</button>
       </div>
 
-      <button
-        onClick={handleAddToCart}
-        className="add-to-cart-btn"
-      >
+      {/* Botón de agregar al carrito */}
+      <button className="add-to-cart-btn" onClick={handleAddToCart}>
         Agregar al carrito
       </button>
     </div>

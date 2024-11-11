@@ -1,13 +1,16 @@
-// src/components/Footer.jsx
-import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFacebook, faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
+import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faFacebook,
+  faInstagram,
+  faTwitter,
+} from "@fortawesome/free-brands-svg-icons";
 
 const Footer = () => {
   return (
-    <footer style={{ backgroundColor: '#f67280', padding: '1rem', textAlign: 'center', color: '#fff' }}>
+    <footer>
       <p>Síguenos en:</p>
-      <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem' }}>
+      <div className="social-icons">
         <FontAwesomeIcon icon={faFacebook} />
         <FontAwesomeIcon icon={faInstagram} />
         <FontAwesomeIcon icon={faTwitter} />

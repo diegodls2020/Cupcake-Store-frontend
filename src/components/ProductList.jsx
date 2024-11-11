@@ -1,15 +1,37 @@
-const handleAddToCart = (product) => {
-  setCart((prevCart) => {
-      const existingProduct = prevCart.find((item) => item.id === product.id);
+import React from "react";
+import ProductCard from "./ProductCard";
+import { useCart } from "../context/CartContext"; // Usamos el hook del CartContext
+import "../App.css";
 
-      if (existingProduct) {
-          // Si el producto ya está en el carrito, incrementa la cantidad
-          return prevCart.map((item) =>
-              item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
-          );
-      } else {
-          // Si el producto no está en el carrito, agrégalo con cantidad 1
-          return [...prevCart, { ...product, quantity: 1 }];
-      }
-  });
+const ProductList = ({ products }) => {
+  const { cart, addToCart, updateQuantity } = useCart();
+
+  const handleQuantityChange = (productId, amount) => {
+    const productInCart = cart.find((item) => item.id === productId);
+    if (productInCart) {
+      const newQuantity = Math.max(productInCart.quantity + amount, 0);
+      updateQuantity(productId, newQuantity);
+    }
+  };
+
+  return (
+    <div className="product-list">
+      {products.map((product) => {
+        const productInCart = cart.find((item) => item.id === product.id) || {
+          quantity: 0,
+        };
+        return (
+          <ProductCard
+            key={product.id}
+            product={product}
+            quantity={productInCart.quantity}
+            onAddToCart={() => addToCart(product)} // Pasa el producto completo
+            onQuantityChange={handleQuantityChange}
+          />
+        );
+      })}
+    </div>
+  );
 };
+
+export default ProductList;
